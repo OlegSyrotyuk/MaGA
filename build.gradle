@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+    group = 'gg.cristalix'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url "https://repo.c7x.dev/repository/maven-public/"
+            credentials {
+                username System.getenv("REPO_C7X_USERNAME")
+                password System.getenv("REPO_C7X_PASSWORD")
+            }
+        }
+    }
+
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+    }
+
+    tasks.withType(JavaCompile)*.options*.encoding = "UTF-8"
+
+    dependencies {
+
+        api fileTree('.libs')
+
+        api 'ru.cristalix:diamondpaper:1.0.1'
+
+        compileOnly 'org.projectlombok:lombok:1.18.24'
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    }
+}
