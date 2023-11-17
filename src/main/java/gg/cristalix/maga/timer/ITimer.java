@@ -1,20 +1,22 @@
 package gg.cristalix.maga.timer;
 
+import java.util.function.Consumer;
+
 public interface ITimer {
 
     /**
      * Действие, которое будет выполняться каждую секунду.
      *
-     * @param runnable действие
+     * @param consumer действие
      */
-    void everySecond(Runnable runnable);
+    ITimer everySecond(Consumer<ITimer> consumer);
 
     /**
      * Действие, которое будет выполнено после завершения таймера.
      *
      * @param runnable действие
      */
-    void onFinish(Runnable runnable);
+    ITimer finish(Runnable runnable);
 
     /**
      * Получить оставшееся время до конца таймера.

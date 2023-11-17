@@ -1,28 +1,35 @@
 package gg.cristalix.maga.timer;
 
-import lombok.RequiredArgsConstructor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-@RequiredArgsConstructor
+import java.util.function.Consumer;
+
 public class SimpleTimer implements ITimer {
 
     private final JavaPlugin plugin;
     private final String name;
-    private final int time;
-    private int leftTime = time;
-    private Runnable everySecond;
+    private int leftTime;
+    private Consumer<ITimer> everySecond;
     private Runnable onFinish;
     private BukkitRunnable task;
 
-    @Override
-    public void everySecond(Runnable runnable) {
-        this.everySecond = runnable;
+    public SimpleTimer(JavaPlugin plugin, String name, int time) {
+        this.plugin = plugin;
+        this.name = name;
+        this.leftTime = time;
     }
 
     @Override
-    public void onFinish(Runnable runnable) {
+    public ITimer everySecond(Consumer<ITimer> consumer) {
+        this.everySecond = consumer;
+        return this;
+    }
+
+    @Override
+    public ITimer finish(Runnable runnable) {
         this.onFinish = runnable;
+        return this;
     }
 
     @Override
@@ -36,7 +43,7 @@ public class SimpleTimer implements ITimer {
             @Override
             public void run() {
                 if (leftTime > 0) {
-                    everySecond.run();
+                    everySecond.accept(SimpleTimer.this);
                     leftTime--;
                 } else {
                     onFinish.run();
