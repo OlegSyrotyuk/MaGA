@@ -1,36 +1,48 @@
 plugins {
     id 'java'
+    id 'org.hidetake.ssh' version '2.10.1'
     id 'java-library'
 }
 
-group = 'gg.cristalix'
-version = '1.0.0'
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.hidetake.ssh'
+    apply plugin: 'java-library'
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-        url "https://repo.c7x.dev/repository/maven-public/"
-        credentials {
-            username System.getenv("REPO_C7X_USERNAME")
-            password System.getenv("REPO_C7X_PASSWORD")
+    group = 'gg.cristalix'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url "https://repo.c7x.dev/repository/maven-public/"
+            credentials {
+                username System.getenv("REPO_C7X_USERNAME")
+                password System.getenv("REPO_C7X_PASSWORD")
+            }
         }
     }
-}
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
-}
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+    }
 
-tasks.withType(JavaCompile)*.options*.encoding = "UTF-8"
+    tasks.withType(JavaCompile)*.options*.encoding = "UTF-8"
 
-dependencies {
+    dependencies {
 
-    compileOnly fileTree('.libs')
+        compileOnly 'org.projectlombok:lombok:1.18.24'
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    }
 
-    compileOnly 'ru.cristalix:diamondpaper:1.0.1'
-    api 'gg.cristalix.visual-driver:api:3.6.10'
-
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    remotes {
+        webServer {
+            host = 'mokou.dedi.c7x.dev'
+            port = 22
+            knownHosts = allowAnyHosts
+            user = System.getenv('SSH_USER')
+            identity = file(System.getenv('SSH_PRIVATE_KEY'))
+        }
+    }
 }
