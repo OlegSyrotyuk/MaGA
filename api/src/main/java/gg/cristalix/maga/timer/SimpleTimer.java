@@ -3,20 +3,21 @@ package gg.cristalix.maga.timer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class SimpleTimer implements ITimer {
 
+    private final UUID uuid;
     private final JavaPlugin plugin;
-    private final String name;
     private int leftTime;
     private Consumer<ITimer> everySecond;
     private Runnable onFinish;
     private BukkitRunnable task;
 
-    public SimpleTimer(JavaPlugin plugin, String name, int time) {
+    public SimpleTimer(UUID uuid, JavaPlugin plugin, int time) {
+        this.uuid = uuid;
         this.plugin = plugin;
-        this.name = name;
         this.leftTime = time;
         this.everySecond = timer -> {
         };
@@ -61,7 +62,7 @@ public class SimpleTimer implements ITimer {
     @Override
     public void cancel() {
         if (task != null) {
-            ((TimerService) ITimerService.get()).deleteTimer(name);
+            ((TimerService) ITimerService.get()).deleteTimer(uuid);
             task.cancel();
         }
     }

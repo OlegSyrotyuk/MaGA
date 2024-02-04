@@ -32,6 +32,8 @@ allprojects {
 
     dependencies {
 
+        api 'com.google.code.gson:gson:2.10.1'
+
         compileOnly 'org.projectlombok:lombok:1.18.24'
         annotationProcessor 'org.projectlombok:lombok:1.18.24'
     }

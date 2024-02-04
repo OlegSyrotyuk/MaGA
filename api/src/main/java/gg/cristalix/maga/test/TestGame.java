@@ -5,13 +5,16 @@ import gg.cristalix.maga.game.AbstractGame;
 import gg.cristalix.maga.kit.IKitSection;
 import gg.cristalix.maga.kit.IKitService;
 import gg.cristalix.maga.kit.Kit;
+import gg.cristalix.maga.team.Team;
+import gg.cristalix.maga.util.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class TestGame extends AbstractGame {
 
-    public TestGame(IArena arena) {
-        super("bedrock-box-classic", arena);
+    public TestGame(IArena arena, JavaPlugin plugin) {
+        super("bedrock-box-classic", arena, plugin);
         getSettings().set("min-players", 10);
         getSettings().set("max-players", 100);
         getSettings().set("nollen-churka", true);
@@ -23,6 +26,7 @@ public class TestGame extends AbstractGame {
     @Override
     public void enable() {
 
+        registerPhases();
         registerKits();
         //TODO: подготовка игре
 
@@ -46,4 +50,5 @@ public class TestGame extends AbstractGame {
     private void registerPhases() {
         addPhase(TestPhase.IN_GAME);
     }
+
 }

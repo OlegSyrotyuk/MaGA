@@ -34,7 +34,7 @@ public interface IArena {
     /**
      * Добавить мир на арену с заданным именем.
      *
-     * @param name  Имя мира.
+     * @param name  имя мира.
      * @param world Объект мира.
      */
     void addWorld(String name, World world);

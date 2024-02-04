@@ -1,17 +1,19 @@
 package gg.cristalix.maga.team;
 
+import gg.cristalix.maga.util.Color;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Team {
 
-    private final String id;
-    private String displayName;
-    private Set<Player> players;
+    private Color color;
+    private int slots;
+    private final Set<Player> players = new HashSet<>();
 
 }

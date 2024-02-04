@@ -10,6 +10,8 @@ import ru.cristalix.core.network.PacketNameHelper;
 import ru.cristalix.core.network.SocketClient;
 import ru.cristalix.core.realm.IRealmService;
 import ru.cristalix.core.realm.RealmService;
+import ru.cristalix.core.transfer.ITransferService;
+import ru.cristalix.core.transfer.TransferService;
 
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -42,7 +44,8 @@ public class MagaServer {
 
         PacketNameHelper.defaultInit();
 
-        CoreApi.get().registerService(IRealmService.class, new RealmService(CoreApi.get().bus(), this.socketClient));
+        api.registerService(IRealmService.class, new RealmService(CoreApi.get().bus(), this.socketClient));
+        api.registerService(ITransferService.class, new TransferService(socketClient));
 
         // connect to tower
         String towerIp = System.getenv().getOrDefault("TOWER_IP", "tower.c7x.dev");

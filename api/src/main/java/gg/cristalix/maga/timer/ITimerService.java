@@ -12,17 +12,9 @@ public interface ITimerService extends IService {
     /**
      * Создать простой таймер.
      *
-     * @param name имя таймера
      * @param time время таймера
      * @return таймер
      */
-    ITimer createSimpleTimer(String name, int time);
+    ITimer createSimpleTimer(int time);
 
-    /**
-     * Получить таймер по его имени.
-     *
-     * @param name имя таймера
-     * @return таймер
-     */
-    ITimer getTimer(String name);
 }

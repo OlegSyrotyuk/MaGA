@@ -1,21 +1,59 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'gg.cristalix'
-version = '1.0.0'
+version = '1.0.1'
 
 repositories {
     mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
 }
 
 dependencies {
     compileOnly fileTree('.libs')
 
     compileOnly 'ru.cristalix:diamondpaper:1.0.1'
-    api 'gg.cristalix.visual-driver:api:3.6.10'
+    api 'gg.cristalix.visual-driver:api:3.7.11'
+    api 'ru.cristalix:wada:2.1.0'
 }
 
-test {
-    useJUnitPlatform()
+task javadocJar(type: Jar, dependsOn: 'javadoc') {
+    from javadoc
+    archiveClassifier.set('javadoc')
+}
+
+artifacts {
+    archives javadocJar
+}
+
+publishing {
+    repositories {
+        maven {
+            url "https://repo.c7x.dev/repository/maven-releases/"
+            credentials {
+                username System.getenv("REPO_C7X_USERNAME")
+                password System.getenv("REPO_C7X_PASSWORD")
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = "gg.cristalix.maga"
+            artifactId = "api"
+            version = "1.0.0"
+
+            from components.java
+            artifact javadocJar
+        }
+    }
 }

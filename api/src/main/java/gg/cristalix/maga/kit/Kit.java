@@ -17,7 +17,8 @@ public class Kit {
     private String name;
     private List<String> description;
     private @Singular List<ItemStack> items;
-    private Consumer<Player> receiving;
+    private Consumer<Player> receiving = (player) -> {
+    };
 
     /**
      * Выдать игроку набор.

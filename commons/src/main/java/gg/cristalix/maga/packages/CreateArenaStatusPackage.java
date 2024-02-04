@@ -4,14 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import ru.cristalix.core.network.CorePackage;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class CreateArenaPackage extends CorePackage {
+public class CreateArenaStatusPackage extends CorePackage {
 
-    private String minigame;
-    private Set<UUID> players;
+    private Status status;
+    private UUID uuid;
 
+    public enum Status {
+        SUCCESS,
+        FAILED
+    }
 }

@@ -1,6 +1,6 @@
 package gg.cristalix.maga.event;
 
-import gg.cristalix.maga.arena.Arena;
+import gg.cristalix.maga.arena.IArena;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ public class PlayerQuitArenaEvent extends Event {
     private static final HandlerList handlerList = new HandlerList();
 
     private final Player player;
-    private final Arena arena;
+    private final IArena arena;
 
     @Override
     public HandlerList getHandlers() {
